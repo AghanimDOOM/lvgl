@@ -81,7 +81,7 @@ void lv_freetype_uninit(void);
  * @return Created font, or NULL on failure.
  */
 lv_font_t * lv_freetype_font_create(const char * pathname, lv_freetype_font_render_mode_t render_mode, uint32_t size,
-                                    lv_freetype_font_style_t style);
+                                    lv_freetype_font_style_t style, int32_t weight);
 
 /**
  * Delete a freetype font.

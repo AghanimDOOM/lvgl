@@ -112,7 +112,7 @@ void lv_freetype_uninit(void)
 }
 
 lv_font_t * lv_freetype_font_create(const char * pathname, lv_freetype_font_render_mode_t render_mode, uint32_t size,
-                                    lv_freetype_font_style_t style)
+                                    lv_freetype_font_style_t style, int32_t weight)
 {
     LV_ASSERT_NULL(pathname);
     LV_ASSERT(size > 0);
@@ -126,6 +126,7 @@ lv_font_t * lv_freetype_font_create(const char * pathname, lv_freetype_font_rend
         .pathname = lv_freetype_req_face_id(ctx, pathname),
         .style = style,
         .render_mode = render_mode,
+        .weight = weight,
     };
 
     bool cache_hitting = true;
@@ -368,6 +369,13 @@ static bool cache_node_cache_create_cb(lv_freetype_cache_node_t * node, void * u
         lv_freetype_italic_transform(face);
     }
 
+    if(node->weight != 0) {
+        // 设置字重
+        FT_Fixed coords[1] = {node->weight<<16};
+        // 设置设计轴值
+        FT_Set_Var_Design_Coordinates(face, 1, coords);
+    }
+
     node->face = face;
     lv_mutex_init(&node->face_lock);
 
@@ -395,6 +403,10 @@ static lv_cache_compare_res_t cache_node_cache_compare_cb(const lv_freetype_cach
     }
     if(lhs->style != rhs->style) {
         return lhs->style > rhs->style ? 1 : -1;
+    }
+
+    if(lhs->weight != rhs->weight) {
+        return lhs->weight > rhs->weight ? 1 : -1;
     }
 
     int32_t cmp_res = lv_strcmp(lhs->pathname, rhs->pathname);

@@ -17,7 +17,7 @@ void lv_example_freetype_1(void)
     lv_font_t * font = lv_freetype_font_create(PATH_PREFIX "lvgl/examples/libs/freetype/Lato-Regular.ttf",
                                                LV_FREETYPE_FONT_RENDER_MODE_BITMAP,
                                                24,
-                                               LV_FREETYPE_FONT_STYLE_NORMAL);
+                                               LV_FREETYPE_FONT_STYLE_NORMAL, 0);
 
     if(!font) {
         LV_LOG_ERROR("freetype font create failed.");
