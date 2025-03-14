@@ -1,5 +1,6 @@
 find_package(PkgConfig)
-pkg_check_modules(PKG_Libdrm pkg_check_modules libdrm)
+# pkg_check_modules(PKG_Libdrm pkg_check_modules libdrm)
+pkg_check_modules(PKG_Libdrm libdrm)
 
 set(Libdrm_DEFINITIONS ${PKG_Libdrm_CFLAGS_OTHER})
 set(Libdrm_VERSION ${PKG_Libdrm_VERSION})
